@@ -2,39 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="facultyAvailabilityScheduler.Views.SelectionPage"
-             Title="SelectionPage"
-             BackgroundColor="#F1F1F1">
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
-        <Label 
-            Text="Welcome to Faculty Scheduler!!"
-            FontSize="24"
-            TextColor="#333333"
-            FontFamily="Segoe UI"
-            HorizontalOptions="Center" />
+             Title="SelectionPage">
+    <Grid>
+        <Image Source="https://www.hiboox.com/wp-content/uploads/2021/12/Higher-Education-Institutions-2048x1366.jpg" Aspect="AspectFill" />
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
+            <Label 
+                Text="Welcome to Faculty Scheduler!!"
+                FontSize="24"
+                            TextColor="White"
+                   BackgroundColor="#000000"
+                FontFamily="Segoe UI"
+                HorizontalOptions="Center" />
 
-        <Label 
-            Text="Please Select Your Type"
-            FontSize="18"
-            TextColor="#666666"
-            FontFamily="Segoe UI"
-            HorizontalOptions="Center" />
+            <Label 
+                Text="Please Select Your Type"
+                FontSize="18"
+                             TextColor="White"
+                    BackgroundColor="#000000"
+                FontFamily="Segoe UI"
+                HorizontalOptions="Center" />
 
-        <Button
-            x:Name="StudentLoginButton"
-            Text="Student"
-            BackgroundColor="#007BFF"
-            TextColor="White"
-            FontSize="18"
-            FontFamily="Segoe UI"
-            Clicked="OnStudentLoginClicked" />
+            <Button
+                x:Name="StudentLoginButton"
+                Text="Student"
+                BackgroundColor="#007BFF"
+                TextColor="White"
+                FontSize="18"
+                FontFamily="Segoe UI"
+                Clicked="OnStudentLoginClicked" />
 
-        <Button
-            x:Name="FacultyLoginButton"
-            Text="Faculty"
-            BackgroundColor="#28A745"
-            TextColor="White"
-            FontSize="18"
-            FontFamily="Segoe UI"
-            Clicked="OnFacultyLoginClicked" />
-    </StackLayout>
+            <Button
+                x:Name="FacultyLoginButton"
+                Text="Faculty"
+                BackgroundColor="#28A745"
+                TextColor="White"
+                FontSize="18"
+                FontFamily="Segoe UI"
+                Clicked="OnFacultyLoginClicked" />
+        </StackLayout>
+    </Grid>
 </ContentPage>
