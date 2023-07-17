@@ -2,23 +2,39 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="facultyAvailabilityScheduler.Views.SelectionPage"
-             Title="SelectionPage">
-    <VerticalStackLayout>
+             Title="SelectionPage"
+             BackgroundColor="#F1F1F1">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
         <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
+            Text="Welcome to Faculty Scheduler!!"
+            FontSize="24"
+            TextColor="#333333"
+            FontFamily="Segoe UI"
+            HorizontalOptions="Center" />
+
+        <Label 
+            Text="Please Select Your Type"
+            FontSize="18"
+            TextColor="#666666"
+            FontFamily="Segoe UI"
             HorizontalOptions="Center" />
 
         <Button
             x:Name="StudentLoginButton"
             Text="Student"
-            Clicked="OnStudentLoginClicked"
-            Margin="20" />
+            BackgroundColor="#007BFF"
+            TextColor="White"
+            FontSize="18"
+            FontFamily="Segoe UI"
+            Clicked="OnStudentLoginClicked" />
 
         <Button
             x:Name="FacultyLoginButton"
             Text="Faculty"
-            Clicked="OnFacultyLoginClicked"
-            Margin="20" />
-    </VerticalStackLayout>
+            BackgroundColor="#28A745"
+            TextColor="White"
+            FontSize="18"
+            FontFamily="Segoe UI"
+            Clicked="OnFacultyLoginClicked" />
+    </StackLayout>
 </ContentPage>
