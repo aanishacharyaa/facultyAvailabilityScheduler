@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="facultyAvailabilityScheduler.Views.LoginPage"
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             
+             Title="LoginPage">
+
+  
+    <dataForm:SfDataForm x:Name="loginForm" DataObject="{Binding LoginFormModel}" LayoutType="TextInputLayout" />
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+      
+    </VerticalStackLayout>
+</ContentPage>
