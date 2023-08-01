@@ -49,15 +49,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Views\booking.xaml.cs" />
+	  <Compile Remove="Views\NewPage1.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="Views\booking.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Syncfusion.Maui.DataForm" Version="22.1.38" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\book.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FacultyLoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewPage1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SelectionPage.xaml">
