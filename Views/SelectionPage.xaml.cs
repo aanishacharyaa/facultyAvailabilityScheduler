@@ -13,13 +13,13 @@ namespace facultyAvailabilityScheduler.Views
         private async void OnStudentLoginClicked(object sender, EventArgs e)
         {
             // Logic for handling student login
-            await Navigation.PushAsync(new StudentLoginPage());
+            await Navigation.PushAsync(new LoginPage("student"));
         }
 
         private async void OnFacultyLoginClicked(object sender, EventArgs e)
         {
             // Logic for handling faculty login
-            await Navigation.PushAsync(new FacultyLoginPage());
+            await Navigation.PushAsync(new LoginPage("faculty"));
         }
     }
 }

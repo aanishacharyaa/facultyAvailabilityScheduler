@@ -1,0 +1,35 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="facultyAvailabilityScheduler.Views.Faculty"
+             Title="Faculty">
+    <VerticalStackLayout>
+ 
+
+        <!-- Label to display the username from the global variable -->
+        <Label 
+            Text="{Binding UserName}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <!-- DatePicker to select the date -->
+        <DatePicker x:Name="datePicker" />
+
+        <!-- Start TimePicker -->
+        <TimePicker x:Name="startTimePicker" />
+
+        <!-- End TimePicker -->
+        <TimePicker x:Name="endTimePicker" />
+
+        <!-- Button to add the selected time slot -->
+        <Button Text="Add Availability" Clicked="OnAddAvailabilityClicked" />
+
+        <!-- ListView to display the added time slots -->
+        <ListView x:Name="availabilityListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding .}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>

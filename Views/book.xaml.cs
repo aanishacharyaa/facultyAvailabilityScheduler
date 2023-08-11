@@ -1,13 +1,20 @@
 using Microsoft.Maui.Controls;
 using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace facultyAvailabilityScheduler.Views
 {
     public partial class book : ContentPage
     {
+        public ObservableCollection<string> previousAppointmentsList { get; } = new ObservableCollection<string>();
+
         public book()
         {
             InitializeComponent();
+
+                        BindingContext = this;
+
 
             // Populate the FacultyPicker with faculty names (Replace with actual data source)
             FacultyPicker.ItemsSource = new string[] { "Faculty A", "Faculty B", "Faculty C" };
@@ -16,6 +23,13 @@ namespace facultyAvailabilityScheduler.Views
             DatePicker.MinimumDate = DateTime.Today;
             DatePicker.MaximumDate = DateTime.Today.AddDays(7);
             TimePicker.Time = new TimeSpan(10, 0, 0); // Set default time to 10:00 AM
+
+
+            // Populate the previous appointments list with sample data
+           // previousAppointmentsList.Add("Faculty A - 2023-08-10 10:00 AM");
+           // previousAppointmentsList.Add("Faculty B - 2023-08-11 02:00 PM");
+
+           // previousAppointmentsListView.ItemsSource = previousAppointmentsList;
         }
 
         private void OnScheduleButtonClicked(object sender, EventArgs e)
@@ -23,11 +37,35 @@ namespace facultyAvailabilityScheduler.Views
             // Get the selected faculty and the chosen date and time
             string selectedFaculty = FacultyPicker.SelectedItem?.ToString();
             DateTime selectedDate = DatePicker.Date;
-            TimeSpan selectedTime = TimePicker.Time;
+            DateTime selectedDateTime = selectedDate.Add(TimePicker.Time); // Combine DatePicker.Date with TimePicker.Time
 
-            // Handle scheduling logic here, for example, show confirmation or make API request
-            string confirmationMessage = $"Faculty: {selectedFaculty}\nDate: {selectedDate.ToString("D")}\nTime: {selectedTime.ToString(@"hh\:mm")}";
-            DisplayAlert("Meeting Scheduled", confirmationMessage, "OK");
+            if (selectedFaculty != null)
+            {
+                string facultyText = selectedFaculty.Trim(); // Remove leading/trailing spaces
+                if (!string.IsNullOrEmpty(facultyText))
+                {
+                    // Handle scheduling logic here
+                    string appointmentDetails = $"{facultyText} - {selectedDateTime:MMMM dd, yyyy hh:mm tt}";
+
+                    previousAppointmentsList.Add(appointmentDetails);
+
+                    string confirmationMessage = $"Faculty: {facultyText}\nDate and Time: {selectedDateTime:MMMM dd, yyyy hh:mm tt}";
+                    DisplayAlert("Meeting Scheduled", confirmationMessage, "OK");
+                }
+                else
+                {
+                    DisplayAlert("Error", "Please select a valid faculty before scheduling.", "OK");
+                }
+            }
+            else
+            {
+                DisplayAlert("Error", "Please select a faculty before scheduling.", "OK");
+            }
         }
+
+
+
+
+
     }
 }

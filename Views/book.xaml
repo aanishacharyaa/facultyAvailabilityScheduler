@@ -3,31 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="facultyAvailabilityScheduler.Views.book"
              Title="Booking Appointment">
-    <StackLayout Padding="20">
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            HorizontalOptions="Center" />
 
-        <Picker x:Name="FacultyPicker"
-                Title="Select Faculty"
-                HorizontalOptions="FillAndExpand"
-                Margin="0,20,0,10"/>
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="TextColor" Value="HotPink" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BackgroundColor" Value="HotPink" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="Margin" Value="0,20,0,0" />
+        </Style>
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="HotPink" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="Margin" Value="0,20,0,10" />
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="TextColor" Value="HotPink" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+        </Style>
+        <Style TargetType="TimePicker">
+            <Setter Property="TextColor" Value="HotPink" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+        </Style>
+    </ContentPage.Resources>
 
-        <DatePicker x:Name="DatePicker"
-                    Format="D"
-                    MinimumDate="{Binding MinimumDate}"
-                    MaximumDate="{Binding MaximumDate}"
-                    HorizontalOptions="FillAndExpand"
-                    Margin="0,0,0,10"/>
+    <StackLayout Padding="20" BackgroundColor="LightPink" VerticalOptions="FillAndExpand">
+        <Label Text="Welcome to Barbie's Appointment Scheduler!" />
 
-        <TimePicker x:Name="TimePicker"
-                    Format="T"
-                    HorizontalOptions="FillAndExpand"
-                    Margin="0,0,0,10"/>
+        <Picker x:Name="FacultyPicker" Title="Select Faculty" />
 
-        <Button x:Name="ScheduleButton"
-                Text="Schedule Meeting"
-                HorizontalOptions="Center"
-                Clicked="OnScheduleButtonClicked"/>
+        <DatePicker x:Name="DatePicker" Format="D" />
+
+        <TimePicker x:Name="TimePicker" Format="T" />
+
+        <Button x:Name="ScheduleButton" Text="Schedule Meeting" Clicked="OnScheduleButtonClicked" />
+
+        <Label Text="Previous Appointments!" />
+
+        <!-- ListView to display the previous appointments -->
+        <ListView x:Name="previousAppointmentsListView"
+          ItemsSource="{Binding previousAppointmentsList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>
