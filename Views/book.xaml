@@ -45,7 +45,7 @@
     </ContentPage.Resources>
 
     <StackLayout Padding="20" BackgroundColor="LightPink" VerticalOptions="FillAndExpand">
-        <Label Text="Welcome to Barbie's Appointment Scheduler!" />
+        <Label Text="Welcome to Faculty Appointment Scheduler!" />
 
         <Picker x:Name="FacultyPicker" Title="Select Faculty" />
 
