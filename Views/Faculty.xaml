@@ -1,27 +1,64 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="facultyAvailabilityScheduler.Views.Faculty"
-             Title="Faculty">
-    <VerticalStackLayout>
- 
+             Title="Faculty"
+             BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BackgroundColor">#FFB6C1</Color>
+            <!-- Pink Background -->
+            <Color x:Key="FontColor">#000000</Color>
+            <!-- Dark Black Font Color -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource FontColor}" />
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="TextColor" Value="{StaticResource FontColor}" />
+            </Style>
+            <Style TargetType="TimePicker">
+                <Setter Property="TextColor" Value="{StaticResource FontColor}" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource FontColor}" />
+                <Setter Property="TextColor" Value="{StaticResource BackgroundColor}" />
+                <!-- Inverted text color -->
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+            <Style TargetType="ListView">
+                <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
+    <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
         <!-- Label to display the username from the global variable -->
         <Label 
-            Text="{Binding UserName}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            Text="{Binding UserName, StringFormat='Welcome {0}'}"
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand"
+            FontSize="24"
+            FontAttributes="Bold"
+            TextColor="{StaticResource FontColor}">
+            <Label.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="iOS" Value="HelveticaNeue-Bold" />
+                    <On Platform="Android" Value="sans-serif-condensed" />
+                    <On Platform="UWP" Value="Assets/Fonts/YourCustomFont.ttf#YourCustomFont" />
+                </OnPlatform>
+            </Label.FontFamily>
+        </Label>
 
         <!-- DatePicker to select the date -->
-        <DatePicker x:Name="datePicker" />
+        <DatePicker x:Name="datePicker" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
 
         <!-- Start TimePicker -->
-        <TimePicker x:Name="startTimePicker" />
+        <TimePicker x:Name="startTimePicker" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
 
         <!-- End TimePicker -->
-        <TimePicker x:Name="endTimePicker" />
+        <TimePicker x:Name="endTimePicker" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
 
         <!-- Button to add the selected time slot -->
-        <Button Text="Add Availability" Clicked="OnAddAvailabilityClicked" />
+        <Button Text="Add Availability" Clicked="OnAddAvailabilityClicked" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
 
         <!-- ListView to display the added time slots -->
         <ListView x:Name="availabilityListView">
@@ -31,5 +68,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
+    </StackLayout>
 </ContentPage>
