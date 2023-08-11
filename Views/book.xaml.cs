@@ -1,7 +1,15 @@
+using facultyAvailabilityScheduler.Models;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+
+ 
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
 
 namespace facultyAvailabilityScheduler.Views
 {
@@ -26,45 +34,116 @@ namespace facultyAvailabilityScheduler.Views
 
 
             // Populate the previous appointments list with sample data
-           // previousAppointmentsList.Add("Faculty A - 2023-08-10 10:00 AM");
-           // previousAppointmentsList.Add("Faculty B - 2023-08-11 02:00 PM");
+            // previousAppointmentsList.Add("Faculty A - 2023-08-10 10:00 AM");
+            // previousAppointmentsList.Add("Faculty B - 2023-08-11 02:00 PM");
 
-           // previousAppointmentsListView.ItemsSource = previousAppointmentsList;
+            // previousAppointmentsListView.ItemsSource = previousAppointmentsList;
+            GetPreviousAppointments();
+
         }
 
-        private void OnScheduleButtonClicked(object sender, EventArgs e)
+        private async void OnScheduleButtonClicked(object sender, EventArgs e)
         {
-            // Get the selected faculty and the chosen date and time
             string selectedFaculty = FacultyPicker.SelectedItem?.ToString();
             DateTime selectedDate = DatePicker.Date;
-            DateTime selectedDateTime = selectedDate.Add(TimePicker.Time); // Combine DatePicker.Date with TimePicker.Time
+            DateTime selectedDateTime = selectedDate.Add(TimePicker.Time);
 
-            if (selectedFaculty != null)
+            if (!string.IsNullOrEmpty(selectedFaculty))
             {
-                string facultyText = selectedFaculty.Trim(); // Remove leading/trailing spaces
-                if (!string.IsNullOrEmpty(facultyText))
+                try
                 {
-                    // Handle scheduling logic here
-                    string appointmentDetails = $"{facultyText} - {selectedDateTime:MMMM dd, yyyy hh:mm tt}";
+                    string token = await GlobalData.GetAccessToken(); // Await the asynchronous method to get the token
 
-                    previousAppointmentsList.Add(appointmentDetails);
+                    if (string.IsNullOrEmpty(token))
+                    {
+                        await DisplayAlert("Error", "Authentication token not available.", "OK");
+                        return;
+                    }
 
-                    string confirmationMessage = $"Faculty: {facultyText}\nDate and Time: {selectedDateTime:MMMM dd, yyyy hh:mm tt}";
-                    DisplayAlert("Meeting Scheduled", confirmationMessage, "OK");
+                    using (var httpClient = new HttpClient())
+                    {
+                        httpClient.DefaultRequestHeaders.Add("x-auth-token", $"{token}");
+
+                        var appointmentData = new
+                        {
+                            selectedFaculty,
+                            selectedDateTime
+                        };
+
+                        var json = JsonSerializer.Serialize(appointmentData);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                        var response = await httpClient.PostAsync("https://chat.crazytech.eu.org/api/schedule-appointmentments", content);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            // Successfully scheduled appointment
+                            string appointmentDetails = $"{selectedFaculty} - {selectedDateTime:MMMM dd, yyyy hh:mm tt}";
+                            previousAppointmentsList.Add(appointmentDetails);
+
+                            string confirmationMessage = $"Faculty: {selectedFaculty}\nDate and Time: {selectedDateTime:MMMM dd, yyyy hh:mm tt}";
+                            await DisplayAlert("Meeting Scheduled", confirmationMessage, "OK");
+                        }
+                        else
+                        {
+                            // Handle error response
+                            var errorMessage = await response.Content.ReadAsStringAsync();
+                            await DisplayAlert("Error", errorMessage, "OK");
+                        }
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    DisplayAlert("Error", "Please select a valid faculty before scheduling.", "OK");
+                    await DisplayAlert("Error", ex.Message, "OK");
                 }
             }
             else
             {
-                DisplayAlert("Error", "Please select a faculty before scheduling.", "OK");
+                await DisplayAlert("Error", "Please select a valid faculty before scheduling.", "OK");
             }
         }
 
+        private async Task GetPreviousAppointments()
+        {
+            try
+            {
+                string token = await GlobalData.GetAccessToken();
 
+                if (string.IsNullOrEmpty(token))
+                {
+                    await DisplayAlert("Error", "Authentication token not available.", "OK");
+                    return;
+                }
 
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Add("x-auth-token", token);
+
+                    var response = await httpClient.GetAsync("https://chat.crazytech.eu.org/api/user-appointments");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var appointmentsJson = await response.Content.ReadAsStringAsync();
+                        var appointments = JsonSerializer.Deserialize<List<Appointment>>(appointmentsJson);
+
+                        foreach (var appointment in appointments)
+                        {
+                            string appointmentDetails = $"{appointment.faculty} - {appointment.date:MMMM dd, yyyy hh:mm tt}";
+                            previousAppointmentsList.Add(appointmentDetails);
+                        }
+                    }
+                    else
+                    {
+                        var errorMessage = await response.Content.ReadAsStringAsync();
+                        await DisplayAlert("Error", errorMessage, "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
 
 
     }
