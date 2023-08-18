@@ -46,9 +46,9 @@
 
     <StackLayout Padding="20" BackgroundColor="LightPink" VerticalOptions="FillAndExpand">
         <Label Text="Welcome to Faculty Appointment Scheduler!" />
+        <Picker x:Name="FacultyPicker" Title="Select Faculty" ItemsSource="{Binding FacultiesList}" ItemDisplayBinding="{Binding Name}" />
 
-        <Picker x:Name="FacultyPicker" Title="Select Faculty" />
-
+ 
         <DatePicker x:Name="DatePicker" Format="D" />
 
         <TimePicker x:Name="TimePicker" Format="T" />

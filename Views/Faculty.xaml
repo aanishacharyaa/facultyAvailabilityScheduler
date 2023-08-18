@@ -30,7 +30,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+    <StackLayout Padding="20" VerticalOptions="FillAndExpand">
         <!-- Label to display the username from the global variable -->
         <Label 
             Text="{Binding UserName, StringFormat='Welcome {0}'}"
@@ -64,7 +64,13 @@
         <ListView x:Name="availabilityListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding .}" />
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding .}"
+                                   TextColor="{StaticResource FontColor}"
+                                   FontSize="16" />
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

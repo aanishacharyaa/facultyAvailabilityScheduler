@@ -48,7 +48,8 @@ namespace facultyAvailabilityScheduler.Views
             string jsonPayload = JsonSerializer.Serialize(payload);
 
 
-            string apiUrl = "https://chat.crazytech.eu.org/api/signin";
+            string apiUrl = role == "faculty" ? "https://chat.crazytech.eu.org/api/faculty_signin" : "https://chat.crazytech.eu.org/api/signin";
+
 
             try
             {
